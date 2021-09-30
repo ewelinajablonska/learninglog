@@ -6,8 +6,8 @@
     
     <p>Add a new entry:</p>
 
-    <form action = "{% url 'learning_log:new_entry' topic.id %}" method = 'post' >
-        {% crsf_token %}
+    <form action = "{% url 'learning_log:new_entry' topic.id %}" method = 'post' > 
+    {% csrf_token %}
         {{ form.as_p }}
         <button name="submit">Add entry</button>
     </form>
