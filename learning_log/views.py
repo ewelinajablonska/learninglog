@@ -23,7 +23,7 @@ def topic(request, topic_id):
     #Make shure the topic belongs to the current user.
     if topic.owner != request.user:
         raise Http404
-        
+
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_log/topic.html', context)
@@ -38,7 +38,9 @@ def new_topic(request):
         #POST data submited; process data.
         form = TopicForm(data = request.POST)
         if form.is_valid():
-            form.save()
+            new_topic = form.save(commit = False)
+            new_topic.owner = request.user
+            new_topic.save()
             return redirect('learning_log:topics')
     
     #Display a blank or invalid form.
