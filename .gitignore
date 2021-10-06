@@ -1,3 +1,5 @@
 ll_env/
 users/__pycache__/
 learning_log/__pycache__/
+users/migrations/
+db.sqlite3
