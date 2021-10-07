@@ -61,6 +61,7 @@ def new_entry(request, topic_id):
         if form.is_valid():
             new_entry = form.save(commit=False)
             new_entry.topic = topic
+            new_entry.owner = request.user
             new_entry.save()
             return redirect('learning_log:topic', topic_id=topic_id)
 
@@ -75,6 +76,9 @@ def edit_entry(request, entry_id):
     entry = Entry.objects.get(id=entry_id)
     topic = entry.topic
 
+    if topic.owner != request.user:
+        raise Http404
+        
     if request.method != 'POST':
         # Initial request; pre-fill form with the current entry.
         form = EntryForm(instance=entry)
