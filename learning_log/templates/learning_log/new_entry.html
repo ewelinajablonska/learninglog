@@ -1,15 +1,20 @@
 {% extends "learning_log/base.html" %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+    <h2>Add a new entry:</h2>
+{% endblock page_header %}
 
 {% block content %}
 
-    <p><a href="{% url 'learning_log:topic' topic.id %}">{{ topic }}</a></p>
-    
-    <p>Add a new entry:</p>
+    <a class="btn btn-lg btn-primary" href="{% url 'learning_log:topic' topic.id %}" role="button">{{ topic }}</a>
 
-    <form action = "{% url 'learning_log:new_entry' topic.id %}" method = 'post' > 
-    {% csrf_token %}
-        {{ form.as_p }}
-        <button name="submit">Add entry</button>
+    <form action = "{% url 'learning_log:new_entry' topic.id %}" method = 'post' class='form'> 
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button name="submit" class="btn btn-primary">Add the entry</button>
+        {% endbuttons %}
     </form>
 
 {% endblock content %}
